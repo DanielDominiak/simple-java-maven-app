@@ -2,32 +2,27 @@ pipeline {
     agent any
     tools {
         maven '3.9.6'
-    }
+    }    
     stages {
-        stage('CleanUp') {
-            steps {
-                deleteDir()
-            }
-        }
         stage('Build') {
             steps {
-                echo 'Faza Build'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
         stage('Test') {
             steps {
-                echo 'Faza Test'
+                sh 'mvn test'
             }
-        }       
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
         stage('Deliver') {
             steps {
-                echo 'Faza Deliver'
+                sh './jenkins/scripts/deliver.sh'
             }
-        }  
-        stage('Finish build') {
-            steps {
-                echo 'Finish build'
-            }
-        }                 
+        }
     }
 }
