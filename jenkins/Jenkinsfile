@@ -14,19 +14,19 @@ pipeline {
                 echo 'Faza Build'
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'Faza Deploy'
-            }
-        }       
         stage('Test') {
             steps {
                 echo 'Faza Test'
             }
-        }  
-        stage('Release') {
+        }       
+        stage('Deliver') {
             steps {
-                echo 'Faza Release'
+                echo 'Faza Deliver'
+            }
+        }  
+        stage('Finish build') {
+            steps {
+                echo 'Finish build'
             }
         }                 
     }
